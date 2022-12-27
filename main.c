@@ -5,15 +5,15 @@
  *  Author: DELL
  */ 
 
-#include "MCAL/DIO/DIO.h"
-#include "MCAL/I2C/I2C_interface.h"
-#include "HAL/EEPROM/EEPROM_interface.h"
-#include "MCAL/ADC/ADC_interface.h"
-#include "MCAL/EXT_INT/ExINT_interface.h"
+#include "APP/ElectricHeater/ElectricHeater.h"
+
 int main(void)
 {
-    while(1)
-    {
-        //TODO:: Please write your application code 
-    }
+	ElectricHeater_init();
+	while(1)
+	{
+		displayTemp();	
+
+
+	}
 }

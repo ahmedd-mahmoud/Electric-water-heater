@@ -9,7 +9,7 @@
 #ifndef I2C_INTERFACE_H_
 #define I2C_INTERFACE_H_
 
-#define F_CPU 16000000
+//#define F_CPU 16000000
 #include <util/delay.h>
 #include "avr/io.h"
 #include "../../MyTypes.h"
