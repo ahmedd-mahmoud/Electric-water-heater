@@ -12,39 +12,41 @@
 #include "util/delay.h"
 #include <avr/io.h>
 #include "../../HAL/HEATER/HEATER_interface.h"
-#include "../../HAL/EEPROM/EEPROM_interface.h"
+#include "avr/eeprom.h"
 #include "../../HAL/BUTTON/BUTTON_interface.h"
 #include "../../HAL/7SEG/SevSeg_interface.h"
 #include "../../MCAL/ADC/ADC_interface.h"
 
+#define TEMP_EEPROM_ADDRESS 69
 
-// to initialize heater and cooler
+#define SENS_UPPERLIMIT	231
+#define SENS_LOWERLIMIT	495
+
+// to initialize heater and cooler	T
 void ElectricHeater_init();
 
-// to heat and cool temp according to set temp
-void HeaterCooler();
+// to heat and cool temp according to set temp		T
+void adjustTemp(uint8 current_value,uint8 set_value);
 
-//displays "temp" on 7seg ++++++++++
-void displayTemp();
+//displays "temp" on 7seg			T
+void displayTemp(uint32 temp);
 
-// to achieve blinking 7seg ++++++++++
+// to achieve blinking 7seg			T
 void displayON();
 void displayOFF();
 
-//reads value in chosen page and memory address "add" +++++++++		
-void fetchSetTemp(uint8 page,uint8 add);	
+// store data in eeprom		 T
+uint8 fetchSetTemp();
+void storeSetTemp(uint8 value);
 
-//writes value in chosen page and memory address "add" +++++++++
-void saveSetTemp(uint8 page,uint8 add);	
+// return avg of 10 temp measurements		T
+uint16 readSensorTemp();
 
-// return avg of 10 temp measurements +++++++++++
-uint8 readSensorTemp();
+// increases set temp to max 75 when up button pressed			T
+void inc_SetTemp(uint8 *value);
 
-// increases set temp to max 75 when up button pressed +++++++++
-void inc_SetTemp();
-
-// decreases set temp to min 35 when down button pressed +++++++++
-void dec_SetTemp();		
+// decreases set temp to min 35 when down button pressed		T
+void dec_SetTemp(uint8 *value);		
 
 
 #endif /* HEATER_INTERFACE_H_ */

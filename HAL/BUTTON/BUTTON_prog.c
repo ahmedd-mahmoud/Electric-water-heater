@@ -8,46 +8,18 @@
 
 #include "BUTTON_interface.h"
 
-
-void BUTTON_INIT()
+void BTNS_init()
 {
-	DIO_setPinDir('A',ONOFF_BUT,IN);	// ON/OFF button input pin
-
-	DIO_setPinDir('A',UP_BUT,IN);		// UP button input pin
+	DIO_setPinDir(BTNS_PORT,BTN_UP_PIN,IN);
+	DIO_setPinDir(BTNS_PORT,BTN_DOWN_PIN,IN);
 	
-	DIO_setPinDir('A',DOWN_BUT,IN);		// DOWN button input pin
 }
-
-uint8 BUTTON_GET(uint8 button_mode)
+uint8 getBTN_UP_val()
 {
-	if(button_mode > 2 || button_mode < 0)
-	{
-		button_mode = 0;
-	}
-	switch(button_mode) 
-	{
-		case ONOFF_BUT :
-		if (DIO_getPinVal('A',ONOFF_BUT))
-		{
-			_delay_ms(25);
-			if (DIO_getPinVal('A',ONOFF_BUT)) {return PRESSED;}
-		}
-		else {return RELEASED;}
-	
-		case UP_BUT :
-		if (DIO_getPinVal('A',UP_BUT))
-		{
-			_delay_ms(25);
-			if (DIO_getPinVal('A',UP_BUT)) {return PRESSED;}
-		}
-		else {return RELEASED;}
-		
-		case DOWN_BUT :
-		if (DIO_getPinVal('A',DOWN_BUT))
-		{
-			_delay_ms(25);
-			if (DIO_getPinVal('A',DOWN_BUT)) {return PRESSED;}
-		}
-		else {return RELEASED;}
-	}
+	return DIO_getPinVal(BTNS_PORT,BTN_UP_PIN);
+}
+uint8 getBTN_DOWN_val()
+{
+	return DIO_getPinVal(BTNS_PORT,BTN_DOWN_PIN);
+
 }

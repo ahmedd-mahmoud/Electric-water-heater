@@ -12,8 +12,12 @@
 #include <avr/io.h>
 #include "../../MCAL/DIO/DIO.h"
 
+#define HEATER_COOLER_PORT 'D'
+#define HEATER_PIN			0
+#define COOLER_PIN			1	
+#define HEATER_LED_PIN		2
 
-void HEATER_init();
+void HEATER_COOLER_init();
 
 // to control heater and cooler according to measured temp with LED config
 void HEATER_ON();

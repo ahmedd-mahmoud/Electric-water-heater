@@ -7,40 +7,37 @@
 
 #include "HEATER_interface.h"
 
-void HEATER_init()
+
+void HEATER_COOLER_init()
 {
-		DIO_setPinDir('D',0,OUT);
-		DIO_setPinDir('D',1,OUT);
-		DIO_setPinDir('D',2,OUT);	//LED direction
+	DIO_setPinDir(HEATER_COOLER_PORT,HEATER_PIN,OUT);
+	DIO_setPinDir(HEATER_COOLER_PORT,COOLER_PIN,OUT);
+	DIO_setPinDir(HEATER_COOLER_PORT,HEATER_LED_PIN,OUT);	//LED direction
 }
 
 void HEATER_ON()
 {
-	DIO_setPinVal('D',0,HIGH);
-	
-	// LED blinking
-	TOGGLE(PORTD,2);
-	_delay_ms(20);
+	DIO_setPinVal(HEATER_COOLER_PORT,HEATER_PIN,HIGH);
 }
 
 void HEATER_OFF()
 {
-	DIO_setPinVal('D',0,LOW);	
+	DIO_setPinVal(HEATER_COOLER_PORT,HEATER_PIN,LOW);	
 	// LED OFF
-	DIO_setPinVal('D',2,LOW);
+	DIO_setPinVal(HEATER_COOLER_PORT,HEATER_LED_PIN,LOW);
 }
 
 void COOLER_ON()
 {
-	DIO_setPinVal('D',1,HIGH);
+	DIO_setPinVal(HEATER_COOLER_PORT,COOLER_PIN,HIGH);
 	// LED ON
-	DIO_setPinVal('D',2,HIGH);
+	DIO_setPinVal(HEATER_COOLER_PORT,HEATER_LED_PIN,HIGH);
 }
 void COOLER_OFF()
 {
-	DIO_setPinVal('D',1,LOW);
+	DIO_setPinVal(HEATER_COOLER_PORT,COOLER_PIN,LOW);
 	// LED OFF
-	DIO_setPinVal('D',2,LOW);
+	DIO_setPinVal(HEATER_COOLER_PORT,HEATER_LED_PIN,LOW);
 }
 
 

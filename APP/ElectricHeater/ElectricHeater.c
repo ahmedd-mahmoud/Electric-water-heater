@@ -7,98 +7,119 @@
 
 #include "ElectricHeater.h"
 
-uint8 set_temp = 60;
-
 void ElectricHeater_init()
 {
-	BUTTON_INIT();
+/*	BUTTON_INIT();*/ // buttons not reusable
 	SEG7_init();
+	// ADC init's
+	ADC_setRefVoltage(External_Vref);
 	ADC_init(single);
-	EEPROM_init();
-	HEATER_init();
+	// Heater cooler init
+	HEATER_COOLER_init();
+
 }
 
-uint8 readSensorTemp()		// Review this
+uint16 readSensorTemp()
 {
-	uint8 i = 1, sum = 0;
-	while(i <= 10)
-	{	
-		ADC_start(7);
-		sum = sum + ADC_getData();
-		i++;
-		_delay_ms(10);
-	}
-	return (sum/i);		// avg of 10 sensor readings
-}
-void HeaterCooler()
-{
-	if(set_temp > readSensorTemp())
+	uint32 result = 0;
+	for (uint8 i=0;i<10;i++)
 	{
+		ADC_start(ADC7);
+		while(!ADC_getADCFlag()); // wait until done
+		result +=  ADC_getData(); // accumulate 10 readings
+		_delay_ms(10);				// time between samples (should be 100ms irl)
+	}
+	result/=10;
+	result = (result*155)/1024;
+	
+	// reject three digits and negative
+	if (result>=99)
+	{
+		result=99;
+	}
+	
+	if (result <= 0)
+	{
+		result = 0;
+	}
+	
+	return result;		// avg of 10 sensor readings
+}
+
+void adjustTemp(uint8 current_value,uint8 set_value)
+{
+	if((set_value - current_value) > 5)
+	{
+		// heater on
 		COOLER_OFF();
 		HEATER_ON();
 	}
-	else if(set_temp < readSensorTemp())
+	else if((current_value - set_value) > 5)
 	{
+		// cooler on
 		HEATER_OFF();
 		COOLER_ON();
 	}
 	else
 	{
+		// do nothing
 		HEATER_OFF();
 		COOLER_OFF();
 	}
 }
 
-void fetchSetTemp(uint8 page,uint8 add)
+uint8 fetchSetTemp()
 {
-	set_temp = EEPROM_ReadByte(page,add);
+	return eeprom_read_byte((const uint8*)TEMP_EEPROM_ADDRESS);
 }
 
-void saveSetTemp(uint8 page,uint8 add)
+void storeSetTemp(uint8 value)
 {
-	EEPROM_WriteByte(page,add,set_temp);
+	eeprom_write_byte((uint8*)TEMP_EEPROM_ADDRESS,value);
 }
 
-// Review This				// Two enables blinking
+// Review This				// fixed port and pin
 void displayON()
 {
-	DIO_setPinVal('C',6,HIGH);
-	DIO_setPinVal('C',7,HIGH);
+	DIO_setPinVal(SEG7_EN_PORT,SEG7_EN1_PIN,HIGH);
+	DIO_setPinVal(SEG7_EN_PORT,SEG7_EN2_PIN,HIGH);
 }
 void displayOFF()
 {
-	DIO_setPinVal('C',6,HIGH);
-	DIO_setPinVal('C',7,HIGH);
+	DIO_setPinVal(SEG7_EN_PORT,SEG7_EN1_PIN,LOW);
+	DIO_setPinVal(SEG7_EN_PORT,SEG7_EN2_PIN,LOW);
 }
 
-void inc_SetTemp()
+
+void inc_SetTemp(uint8 *value)
 {
-	if(set_temp <= 70)		// Max set temp is 75
+	if((*value)+5>75)		// Max set temp is 75
 	{
-		if(BUTTON_GET(UP_BUT))
-		{
-			set_temp += 5;
-		}
+		// stay the same
+	}
+	else 
+	{
+		(*value)+=5;
 	}
 	
 }
 
 
-void dec_SetTemp()
+void dec_SetTemp(uint8 *value)
 {
-	if(set_temp >= 40 )			// Min set temp is 35
+	if((*value)-5<35)		// Max set temp is 75
 	{
-		if(BUTTON_GET(DOWN_BUT))
-		{
-				set_temp -= 5;
-		}
+		// stay the same
+	}
+	else
+	{
+		(*value)-=5;
 	}
 	
 }
 
-void displayTemp()
+void displayTemp(uint32 temp)
 {
-	uint8 temp = readSensorTemp();
 	SEG7_display(temp);
 }
 

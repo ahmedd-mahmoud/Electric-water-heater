@@ -13,15 +13,15 @@
 #include "util/delay.h"
 #include "../../MCAL/DIO/DIO.h"
 
-#define ONOFF_BUT  0
-#define UP_BUT  1
-#define DOWN_BUT  2
+#define BTNS_PORT 'A'
+#define BTN_UP_PIN   1
+#define BTN_DOWN_PIN 2
 
-#define PRESSED  1
-#define RELEASED 0
 
-void BUTTON_INIT();
-uint8 BUTTON_GET (uint8 button_mode);
+void BTNS_init();
+uint8 getBTN_UP_val();
+uint8 getBTN_DOWN_val();
+
 
 
 
