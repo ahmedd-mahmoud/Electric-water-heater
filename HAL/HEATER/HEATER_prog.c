@@ -7,7 +7,6 @@
 
 #include "HEATER_interface.h"
 
-
 void HEATER_COOLER_init()
 {
 	DIO_setPinDir(HEATER_COOLER_PORT,HEATER_PIN,OUT);
@@ -18,6 +17,8 @@ void HEATER_COOLER_init()
 void HEATER_ON()
 {
 	DIO_setPinVal(HEATER_COOLER_PORT,HEATER_PIN,HIGH);
+	// LED BLINK
+	TOGGLE(PORTD,HEATER_LED_PIN);	
 }
 
 void HEATER_OFF()

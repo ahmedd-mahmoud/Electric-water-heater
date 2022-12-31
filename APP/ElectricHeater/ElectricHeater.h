@@ -6,8 +6,8 @@
  */ 
 
 
-#ifndef HEATER_INTERFACE_H_
-#define HEATER_INTERFACE_H_
+#ifndef ELECTRICHEATER_H_
+#define ELECTRICHEATER_H_
 #define F_CPU 16000000UL
 #include "util/delay.h"
 #include <avr/io.h>

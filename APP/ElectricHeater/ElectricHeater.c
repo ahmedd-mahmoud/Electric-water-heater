@@ -9,9 +9,11 @@
 
 void ElectricHeater_init()
 {
-/*	BUTTON_INIT();*/ // buttons not reusable
+	// Buttons init
+	BTNS_init();
+	// Seven Segment init
 	SEG7_init();
-	// ADC init's
+	// ADC inits
 	ADC_setRefVoltage(External_Vref);
 	ADC_init(single);
 	// Heater cooler init
