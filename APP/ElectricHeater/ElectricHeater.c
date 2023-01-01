@@ -125,3 +125,43 @@ void displayTemp(uint32 temp)
 	SEG7_display(temp);
 }
 
+void settingMode(uint8 set_temp)
+{
+	for(int i=0;i<20;i++)     // assuming i++ takes on tick and tick is 250 ms
+	{
+		// display set_temp
+		displayTemp(set_temp);
+		
+		/* to achieve blinking every 1 second*/
+		// display on
+		displayON();
+		// delay
+		_delay_ms(500);
+		// display off
+		displayOFF();
+		// delay
+		_delay_ms(500);
+		
+		if(getBTN_UP_val())
+		{
+			// inc set_temp
+			inc_SetTemp(&set_temp);
+			// store new set_temp
+			storeSetTemp(set_temp);
+			// reset counter
+			i = 0;
+		}
+		
+		//_delay_ms(100);
+		
+		if(getBTN_DOWN_val())
+		{
+			// dec set_temp
+			dec_SetTemp(&set_temp);
+			// store new set_temp
+			storeSetTemp(set_temp);
+			// reset counter
+			i = 0;
+		}
+	}
+}

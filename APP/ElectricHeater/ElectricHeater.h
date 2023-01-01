@@ -48,5 +48,7 @@ void inc_SetTemp(uint8 *value);
 // decreases set temp to min 35 when down button pressed		T
 void dec_SetTemp(uint8 *value);		
 
+// enter setting mode
+void settingMode(uint8 set_temp);
 
 #endif /* HEATER_INTERFACE_H_ */
