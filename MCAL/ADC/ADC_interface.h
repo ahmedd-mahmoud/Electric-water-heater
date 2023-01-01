@@ -22,9 +22,7 @@ uint16 ADC_getData();
 void ADC_stop();
 //enables and disables ADC
 void ADC_setInterruptEnable(Bool val);
-//selects a trigger for ADC while working in auto trigger mode
-/*not complete*/
-void ADC_selectTrigger();
+
 
 
 

@@ -14,8 +14,8 @@ void ElectricHeater_init()
 	// Seven Segment init
 	SEG7_init();
 	// ADC inits
-	ADC_setRefVoltage(External_Vref);
-	ADC_init(single);
+	ADC_init(single);	
+	ADC_setRefVoltage(External_Vref);		// sensor max voltage is 1.5 V
 	// Heater cooler init
 	HEATER_COOLER_init();
 
@@ -31,8 +31,8 @@ uint16 readSensorTemp()
 		result +=  ADC_getData(); // accumulate 10 readings
 		_delay_ms(10);				// time between samples (should be 100ms irl)
 	}
-	result/=10;
-	result = (result*155)/1024;
+	result/=10;		// to take avg of 10 readings
+	result = (result*155)/1024;		// ADC data register is 10 bits so max result of ADC is 2^10 = 1024 and max temp of sensor is 155 deg 
 	
 	// reject three digits and negative
 	if (result>=99)
@@ -80,7 +80,7 @@ void storeSetTemp(uint8 value)
 	eeprom_write_byte((uint8*)TEMP_EEPROM_ADDRESS,value);
 }
 
-// Review This				// fixed port and pin
+
 void displayON()
 {
 	DIO_setPinVal(SEG7_EN_PORT,SEG7_EN1_PIN,HIGH);
@@ -127,7 +127,7 @@ void displayTemp(uint32 temp)
 
 void settingMode(uint8 set_temp)
 {
-	for(int i=0;i<20;i++)     // assuming i++ takes on tick and tick is 250 ms
+	for(int i=0;i<20;i++)     // assuming one loop takes 250 ms to execute (due to simulation not running in real time)
 	{
 		// display set_temp
 		displayTemp(set_temp);
@@ -142,6 +142,7 @@ void settingMode(uint8 set_temp)
 		// delay
 		_delay_ms(500);
 		
+		// continuous check on up and down buttons
 		if(getBTN_UP_val())
 		{
 			// inc set_temp

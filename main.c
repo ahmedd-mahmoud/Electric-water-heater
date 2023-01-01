@@ -18,7 +18,7 @@ int main(void)
 	
 	while(1)		
 	{
-		// read set_temp stored value from EEPROM
+		// read set_temp stored value from internal EEPROM
 		set_temp = fetchSetTemp();			
 			
 		//////////////// Normal Mode ///////////////

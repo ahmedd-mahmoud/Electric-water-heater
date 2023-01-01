@@ -19,33 +19,30 @@
 
 #define TEMP_EEPROM_ADDRESS 69
 
-#define SENS_UPPERLIMIT	231
-#define SENS_LOWERLIMIT	495
-
-// to initialize heater and cooler	T
+// to initialize heater and cooler
 void ElectricHeater_init();
 
-// to heat and cool temp according to set temp		T
+// to heat and cool temp according to set temp
 void adjustTemp(uint8 current_value,uint8 set_value);
 
-//displays "temp" on 7seg			T
+//displays "temp" on 7seg
 void displayTemp(uint32 temp);
 
-// to achieve blinking 7seg			T
+// to achieve blinking 7seg
 void displayON();
 void displayOFF();
 
-// store data in eeprom		 T
+// store data in EEPROM	
 uint8 fetchSetTemp();
 void storeSetTemp(uint8 value);
 
-// return avg of 10 temp measurements		T
+// return avg of 10 temp measurements
 uint16 readSensorTemp();
 
-// increases set temp to max 75 when up button pressed			T
+// increases set temp to max 75 when up button pressed	
 void inc_SetTemp(uint8 *value);
 
-// decreases set temp to min 35 when down button pressed		T
+// decreases set temp to min 35 when down button pressed
 void dec_SetTemp(uint8 *value);		
 
 // enter setting mode
