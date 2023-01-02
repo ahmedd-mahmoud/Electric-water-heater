@@ -13,7 +13,7 @@ void SEG7_init() {
 	// set enable direction
 	DIO_setPinDir(SEG7_EN_PORT,SEG7_EN1_PIN,OUT);
 	DIO_setPinDir(SEG7_EN_PORT,SEG7_EN2_PIN,OUT);
-	SEG7_setEnable(False,False);
+	SEG7_setEnable(True,True);
 }
 
 void SEG7_setEnable(Bool EN1_state,Bool EN2_state) {

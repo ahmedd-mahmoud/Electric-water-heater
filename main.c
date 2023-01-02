@@ -20,21 +20,31 @@ int main(void)
 	{
 		// read set_temp stored value from internal EEPROM
 		set_temp = fetchSetTemp();			
-			
-		//////////////// Normal Mode ///////////////
-		// read current_temp
-		current_temp = readSensorTemp();
 		
-		// display current_temp
-		displayTemp(current_temp);
-		
-		// adjust temp by turning on heater or cooler
-		adjustTemp(current_temp,set_temp);
-		
-		//////////////// Setting Mode ///////////////
-		if((getBTN_UP_val() == True) || (getBTN_DOWN_val() == True) )
+		if(getBTN_ONOFF_val())
 		{
-			settingMode(set_temp);
+			//////////////// Normal Mode ///////////////
+			// read current_temp
+			current_temp = readSensorTemp();
+		
+			// display current_temp
+			displayTemp(current_temp);
+		
+			// adjust temp by turning on heater or cooler
+			adjustTemp(current_temp,set_temp);
+		
+			//////////////// Setting Mode ///////////////
+			if((getBTN_UP_val() == True) || (getBTN_DOWN_val() == True) )
+			{
+				settingMode(set_temp);
+			}
+		}
+		else
+		{
+			displayOFF();
+			HEATER_OFF();
+			COOLER_OFF();
+			HEATER_LED(LOW);
 		}
 	}
 }

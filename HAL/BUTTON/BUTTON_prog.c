@@ -26,20 +26,8 @@ uint8 getBTN_DOWN_val()
 
 }
 
-uint8 count = 0;
 
 uint8 getBTN_ONOFF_val()
 {
-	 if(count%2==0)
-	 {
-		 count++;
-		 return DIO_getPinVal(BTNS_PORT,BTN_ONOFF_PIN);
-	 }
-	 else
-	 {
-		 count++;
-		 return (!(DIO_getPinVal(BTNS_PORT,BTN_ONOFF_PIN)));		 
-	 }
-	 
-	
+	return DIO_getPinVal(BTNS_PORT,BTN_ONOFF_PIN);
 }

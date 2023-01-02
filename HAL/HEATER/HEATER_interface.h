@@ -10,7 +10,7 @@
 #define HEATER_INTERFACE_H_
 
 #include <avr/io.h>
-
+#include "util/delay.h"
 #include "../../MCAL/DIO/DIO.h"
 
 #define HEATER_COOLER_PORT 'D'
@@ -25,8 +25,7 @@ void HEATER_ON();
 void HEATER_OFF();
 void COOLER_ON();
 void COOLER_OFF();
-
-
+void HEATER_LED(uint8 val);
 
 
 #endif /* HEATER_INTERFACE_H_ */

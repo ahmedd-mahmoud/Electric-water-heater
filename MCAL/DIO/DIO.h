@@ -13,6 +13,7 @@
 
 #define IN  0
 #define OUT 1
+#define TOG 2
 
 //Functions
 /* if you choose a port that does exist the default port to every function is portD */

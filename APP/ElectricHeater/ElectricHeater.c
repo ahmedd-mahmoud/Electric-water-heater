@@ -28,33 +28,37 @@ void adjustTemp(uint8 current_value,uint8 set_value)
 		// heater on
 		COOLER_OFF();
 		HEATER_ON();
+		HEATER_LED(TOG);
 	}
 	else if((current_value - set_value) > 5)
 	{
 		// cooler on
 		HEATER_OFF();
 		COOLER_ON();
+		HEATER_LED(HIGH);
 	}
 	else
 	{
 		// do nothing
 		HEATER_OFF();
 		COOLER_OFF();
+		HEATER_LED(LOW);
 	}
 }
 
 void displayTemp(uint32 temp)
 {
+	displayON();
 	SEG7_display(temp);
 }
 
-void displayON()
+void displayOFF()
 {
 	DIO_setPinVal(SEG7_EN_PORT,SEG7_EN1_PIN,HIGH);
 	DIO_setPinVal(SEG7_EN_PORT,SEG7_EN2_PIN,HIGH);
 }
 
-void displayOFF()
+void displayON()
 {
 	DIO_setPinVal(SEG7_EN_PORT,SEG7_EN1_PIN,LOW);
 	DIO_setPinVal(SEG7_EN_PORT,SEG7_EN2_PIN,LOW);
@@ -134,11 +138,11 @@ void settingMode(uint8 set_temp)
 		// display on
 		displayON();
 		// delay
-		_delay_ms(500);
+		_delay_ms(100);
 		// display off
 		displayOFF();
 		// delay
-		_delay_ms(500);
+		_delay_ms(100);
 		
 		// continuous check on up and down buttons
 		if(getBTN_UP_val())

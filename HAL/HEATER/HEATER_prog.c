@@ -17,8 +17,6 @@ void HEATER_COOLER_init()
 void HEATER_ON()
 {
 	DIO_setPinVal(HEATER_COOLER_PORT,HEATER_PIN,HIGH);
-	// LED BLINK
-	TOGGLE(PORTD,HEATER_LED_PIN);	
 }
 
 void HEATER_OFF()
@@ -41,4 +39,24 @@ void COOLER_OFF()
 	DIO_setPinVal(HEATER_COOLER_PORT,HEATER_LED_PIN,LOW);
 }
 
-
+void HEATER_LED(uint8 val)
+{
+	if(val == HIGH)
+	{
+		// LED ON
+		DIO_setPinVal(HEATER_COOLER_PORT,HEATER_LED_PIN,HIGH);	
+	}
+	else if(val == TOG)
+	{
+		
+		// LED BLINK
+		DIO_setPinVal(HEATER_COOLER_PORT,HEATER_LED_PIN,HIGH);
+		_delay_ms(50);
+		DIO_setPinVal(HEATER_COOLER_PORT,HEATER_LED_PIN,LOW);
+	}
+	else
+	{
+		// LED OFF
+		DIO_setPinVal(HEATER_COOLER_PORT,HEATER_LED_PIN,LOW);	
+	}
+}
