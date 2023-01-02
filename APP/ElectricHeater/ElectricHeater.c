@@ -21,6 +21,55 @@ void ElectricHeater_init()
 
 }
 
+void adjustTemp(uint8 current_value,uint8 set_value)
+{
+	if((set_value - current_value) > 5)
+	{
+		// heater on
+		COOLER_OFF();
+		HEATER_ON();
+	}
+	else if((current_value - set_value) > 5)
+	{
+		// cooler on
+		HEATER_OFF();
+		COOLER_ON();
+	}
+	else
+	{
+		// do nothing
+		HEATER_OFF();
+		COOLER_OFF();
+	}
+}
+
+void displayTemp(uint32 temp)
+{
+	SEG7_display(temp);
+}
+
+void displayON()
+{
+	DIO_setPinVal(SEG7_EN_PORT,SEG7_EN1_PIN,HIGH);
+	DIO_setPinVal(SEG7_EN_PORT,SEG7_EN2_PIN,HIGH);
+}
+
+void displayOFF()
+{
+	DIO_setPinVal(SEG7_EN_PORT,SEG7_EN1_PIN,LOW);
+	DIO_setPinVal(SEG7_EN_PORT,SEG7_EN2_PIN,LOW);
+}
+
+uint8 fetchSetTemp()
+{
+	return eeprom_read_byte((const uint8*)TEMP_EEPROM_ADDRESS);
+}
+
+void storeSetTemp(uint8 value)
+{
+	eeprom_write_byte((uint8*)TEMP_EEPROM_ADDRESS,value);
+}
+
 uint16 readSensorTemp()
 {
 	uint32 result = 0;
@@ -48,51 +97,6 @@ uint16 readSensorTemp()
 	return result;		// avg of 10 sensor readings
 }
 
-void adjustTemp(uint8 current_value,uint8 set_value)
-{
-	if((set_value - current_value) > 5)
-	{
-		// heater on
-		COOLER_OFF();
-		HEATER_ON();
-	}
-	else if((current_value - set_value) > 5)
-	{
-		// cooler on
-		HEATER_OFF();
-		COOLER_ON();
-	}
-	else
-	{
-		// do nothing
-		HEATER_OFF();
-		COOLER_OFF();
-	}
-}
-
-uint8 fetchSetTemp()
-{
-	return eeprom_read_byte((const uint8*)TEMP_EEPROM_ADDRESS);
-}
-
-void storeSetTemp(uint8 value)
-{
-	eeprom_write_byte((uint8*)TEMP_EEPROM_ADDRESS,value);
-}
-
-
-void displayON()
-{
-	DIO_setPinVal(SEG7_EN_PORT,SEG7_EN1_PIN,HIGH);
-	DIO_setPinVal(SEG7_EN_PORT,SEG7_EN2_PIN,HIGH);
-}
-void displayOFF()
-{
-	DIO_setPinVal(SEG7_EN_PORT,SEG7_EN1_PIN,LOW);
-	DIO_setPinVal(SEG7_EN_PORT,SEG7_EN2_PIN,LOW);
-}
-
-
 void inc_SetTemp(uint8 *value)
 {
 	if((*value)+5>75)		// Max set temp is 75
@@ -106,7 +110,6 @@ void inc_SetTemp(uint8 *value)
 	
 }
 
-
 void dec_SetTemp(uint8 *value)
 {
 	if((*value)-5<35)		// Max set temp is 75
@@ -118,11 +121,6 @@ void dec_SetTemp(uint8 *value)
 		(*value)-=5;
 	}
 	
-}
-
-void displayTemp(uint32 temp)
-{
-	SEG7_display(temp);
 }
 
 void settingMode(uint8 set_temp)

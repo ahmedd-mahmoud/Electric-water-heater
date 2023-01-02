@@ -25,15 +25,17 @@ void ElectricHeater_init();
 // to heat and cool temp according to set temp
 void adjustTemp(uint8 current_value,uint8 set_value);
 
-//displays "temp" on 7seg
+// displays "temp" on 7seg
 void displayTemp(uint32 temp);
 
 // to achieve blinking 7seg
 void displayON();
+
 void displayOFF();
 
 // store data in EEPROM	
 uint8 fetchSetTemp();
+
 void storeSetTemp(uint8 value);
 
 // return avg of 10 temp measurements
