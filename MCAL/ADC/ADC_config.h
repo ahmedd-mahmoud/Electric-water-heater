@@ -16,13 +16,13 @@ typedef enum
 //clock options
 typedef enum
 {
-	 CLK2,
-	 CLK4,
-	 CLK8,
-	 CLK16,
-	 CLK32,
-	 CLK64,
-	 CLK128			
+	ADC_CLK2,
+	ADC_CLK4,
+	ADC_CLK8,
+	ADC_CLK16,
+	ADC_CLK32,
+	ADC_CLK64,
+	ADC_CLK128			
 }ADC_CLK;
 
 //single ended input channels

@@ -11,11 +11,13 @@
 #define F_CPU 16000000UL
 #include "util/delay.h"
 #include <avr/io.h>
-#include "../../HAL/HEATER/HEATER_interface.h"
+#include "../../MCAL/ADC/ADC_interface.h"
+#include "../../MCAL/Timer/Timer_8.h"
 #include "avr/eeprom.h"
+#include "../../HAL/HEATER/HEATER_interface.h"
 #include "../../HAL/BUTTON/BUTTON_interface.h"
 #include "../../HAL/7SEG/SevSeg_interface.h"
-#include "../../MCAL/ADC/ADC_interface.h"
+
 
 #define TEMP_EEPROM_ADDRESS 69
 

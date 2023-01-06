@@ -18,7 +18,8 @@ void ElectricHeater_init()
 	ADC_setRefVoltage(External_Vref);		// sensor max voltage is 1.5 V
 	// Heater cooler init
 	HEATER_COOLER_init();
-
+	//Timer init
+	timer_init_8(TIM0,normal);
 }
 
 void adjustTemp(uint8 current_value,uint8 set_value)
@@ -129,8 +130,15 @@ void dec_SetTemp(uint8 *value)
 
 void settingMode(uint8 set_temp)
 {
-	for(int i=0;i<20;i++)     // assuming one loop takes 250 ms to execute (due to simulation not running in real time)
+	uint8 of_counter = 0;
+	timer_CLKS_8(TIM0,TIMER_CLK1024);
+	
+	while(of_counter < 12)     // assuming one loop takes 250 ms to execute (due to simulation not running in real time)
 	{
+		if(timer_getOVF(TIM0))
+		{
+			of_counter++;	
+		}
 		// display set_temp
 		displayTemp(set_temp);
 		
@@ -138,12 +146,14 @@ void settingMode(uint8 set_temp)
 		// display on
 		displayON();
 		// delay
-		_delay_ms(100);
+		_delay_ms(50);
 		// display off
 		displayOFF();
 		// delay
-		_delay_ms(100);
+		_delay_ms(50);
+			
 		
+			
 		// continuous check on up and down buttons
 		if(getBTN_UP_val())
 		{
@@ -152,7 +162,7 @@ void settingMode(uint8 set_temp)
 			// store new set_temp
 			storeSetTemp(set_temp);
 			// reset counter
-			i = 0;
+			of_counter=0;
 		}
 		
 		//_delay_ms(100);
@@ -164,7 +174,8 @@ void settingMode(uint8 set_temp)
 			// store new set_temp
 			storeSetTemp(set_temp);
 			// reset counter
-			i = 0;
+			of_counter=0;
 		}
+		
 	}
 }

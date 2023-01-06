@@ -5,7 +5,7 @@ void ADC_init(ADC_mode mode)
 	if (mode==freeRunning)
 	{
 		ADC_Enable(True);
-		ADC_setCLK(CLK128);
+		ADC_setCLK(ADC_CLK128);
 		ADC_setRefVoltage(Vcc);
 		ADC_setInterruptEnable(True);
 	}
@@ -14,14 +14,14 @@ void ADC_init(ADC_mode mode)
 		//this mode is not complete
 		ADC_Enable(True);
 		SETBIT(ADCSRA,ADATE);
-		ADC_setCLK(CLK128);
+		ADC_setCLK(ADC_CLK128);
 		ADC_setRefVoltage(Vcc);
 		ADC_setInterruptEnable(True);		
 	}
 	else //default is single mode
 	{
 		ADC_Enable(True);
-		ADC_setCLK(CLK128);
+		ADC_setCLK(ADC_CLK128);
 		ADC_setRefVoltage(Vcc);
 		ADC_setInterruptEnable(False);
 		
@@ -36,7 +36,7 @@ void ADC_Enable(Bool val)
 void ADC_setCLK(ADC_CLK clock)
 {
 	//config clock
-	if(clock  == CLK2)
+	if(clock  == ADC_CLK2)
 	{
 
 		CLEARBIT(ADCSRA,ADPS2);
@@ -44,31 +44,31 @@ void ADC_setCLK(ADC_CLK clock)
 		SETBIT(ADCSRA,ADPS0);
 	}
 
-	else if(clock  == CLK4)
+	else if(clock  == ADC_CLK4)
 	{
 		CLEARBIT(ADCSRA,ADPS2);
 		SETBIT(ADCSRA,ADPS1);
 		CLEARBIT(ADCSRA,ADPS0);
 	}
-	else if(clock  == CLK8)
+	else if(clock  == ADC_CLK8)
 	{
 		CLEARBIT(ADCSRA,ADPS2);
 		SETBIT(ADCSRA,ADPS1);
 		SETBIT(ADCSRA,ADPS0);
 	}
-	else if(clock  == CLK16)
+	else if(clock  == ADC_CLK16)
 	{
 		SETBIT(ADCSRA,ADPS2);
 		CLEARBIT(ADCSRA,ADPS1);
 		CLEARBIT(ADCSRA,ADPS0);
 	}
-	else if(clock  == CLK32)
+	else if(clock  == ADC_CLK32)
 	{
 		SETBIT(ADCSRA,ADPS2);
 		CLEARBIT(ADCSRA,ADPS1);
 		SETBIT(ADCSRA,ADPS0);
 	}
-	else if(clock  == CLK64)
+	else if(clock  == ADC_CLK64)
 	{
 		SETBIT(ADCSRA,ADPS2);
 		SETBIT(ADCSRA,ADPS1);
