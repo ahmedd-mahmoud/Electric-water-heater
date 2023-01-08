@@ -1,9 +1,4 @@
-/*
- * main.c
- *
- * Created: 12/23/2022 3:29:30 PM
- *  Author: ma407
- */ 
+
 
 #include "SevSeg_interface.h"
 

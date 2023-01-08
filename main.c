@@ -1,9 +1,9 @@
 /*
  * main.c
  *
- * Created: 12/26/2022 8:14:25 PM
- *  Author: DELL
+ *  Authors: AHMED MAHMOUD and MOHAMED AMR
  */ 
+
 #define F_CPU 16000000UL
 
 #include "APP/ElectricHeater/ElectricHeater.h"
@@ -41,6 +41,7 @@ int main(void)
 		}
 		else
 		{
+			// Everything is OFF
 			displayOFF();
 			HEATER_OFF();
 			COOLER_OFF();

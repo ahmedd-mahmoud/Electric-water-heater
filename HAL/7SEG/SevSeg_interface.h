@@ -1,9 +1,4 @@
-/*
- * SevSeg_interface.h
- *
- * Created: 12/26/2022 11:57:07 PM
- *  Author: DELL
- */ 
+
 
 
 #ifndef SEVSEG_INTERFACE_H_

@@ -1,9 +1,3 @@
-/*
- * HEATER_prog.c
- *
- * Created: 12/27/2022 4:19:29 PM
- *  Author: DELL
- */ 
 
 #include "HEATER_interface.h"
 

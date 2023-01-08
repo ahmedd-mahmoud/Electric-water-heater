@@ -1,9 +1,4 @@
-/*
- * ElectricHeater.c
- *
- * Created: 12/27/2022 4:19:29 PM
- *  Author: DELL
- */ 
+
 
 #include "ElectricHeater.h"
 
@@ -86,7 +81,8 @@ uint16 readSensorTemp()
 		_delay_ms(10);				// time between samples (should be 100ms irl)
 	}
 	result/=10;		// to take avg of 10 readings
-	result = (result*155)/1024;		// ADC data register is 10 bits so max result of ADC is 2^10 = 1024 and max temp of sensor is 155 deg 
+	// ADC data register is 10 bits so max result of ADC is 2^10 = 1024 and max temp of sensor is 155 deg
+	result = (result*155)/1024;		 
 	
 	// reject three digits and negative
 	if (result>=99)
@@ -130,12 +126,14 @@ void dec_SetTemp(uint8 *value)
 
 void settingMode(uint8 set_temp)
 {
+	// overflow counter
 	uint8 of_counter = 0;
+	// Choose pre-scaler 1024
 	timer_CLKS_8(TIM0,TIMER_CLK1024);
 	
-	while(of_counter < 12)     // assuming one loop takes 250 ms to execute (due to simulation not running in real time)
+	while(of_counter < 16)     // assuming 12 overflows is 5 sec. (due to simulation not running irl it is not accurate)
 	{
-		if(timer_getOVF(TIM0))
+		if(timer_getOVF(TIM0))	// check overflow flag
 		{
 			of_counter++;	
 		}
@@ -146,11 +144,11 @@ void settingMode(uint8 set_temp)
 		// display on
 		displayON();
 		// delay
-		_delay_ms(50);
+		_delay_ms(100);
 		// display off
 		displayOFF();
 		// delay
-		_delay_ms(50);
+		_delay_ms(100);
 			
 		
 			

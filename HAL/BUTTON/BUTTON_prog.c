@@ -1,9 +1,4 @@
-/*
- * BUTTON_prog.c
- *
- * Created: 10/1/2022 8:41:11 PM
- *  Author: DELL
- */ 
+
 
 
 #include "BUTTON_interface.h"

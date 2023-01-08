@@ -1,8 +1,6 @@
 /*
  * ElectricHeater.h
- *
- * Created: 12/27/2022 4:18:50 PM
- *  Author: DELL
+ *  Authors: AHMED MAHMOUD and MOHAMED AMR
  */ 
 
 

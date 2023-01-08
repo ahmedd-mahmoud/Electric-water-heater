@@ -1,9 +1,4 @@
-/*
- * BUTTON_interface.h
- *
- * Created: 10/1/2022 8:42:19 PM
- *  Author: DELL
- */ 
+
 
 
 #ifndef BUTTON_INTERFACE_H_
