@@ -5,6 +5,7 @@ We did the project on Proteus simulation tool.<br>
 The components needed:
 <ul>
 <li>ATMEGA32a 
+<li>Temperature sensor
 <li>Two Seven Segments 
 <li>3 Buttons
 <li>Led
